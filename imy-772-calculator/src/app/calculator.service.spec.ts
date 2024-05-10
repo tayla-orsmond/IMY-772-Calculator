@@ -189,4 +189,33 @@ describe('CalculatorService', () => {
     expect(parseInt(service.subtract(n1, n2))).toBeGreaterThan(0);
     expect(service.subtract(n1, n2)).toBe(expected);
   });
+
+  it('should not allow input of over 3 digits', () => {
+    let input = '1234';
+    let n2 = '123';
+    let error = 'error';
+    
+    expect(service.add(input, input)).toBe(error);
+    expect(service.add(input, n2)).toBe(error);
+    expect(service.add(n2, input)).toBe(error);
+
+    expect(service.subtract(input, input)).toBe(error);
+    expect(service.subtract(input, n2)).toBe(error);
+    expect(service.subtract(n2, input)).toBe(error);
+
+    expect(service.multiply(input, input)).toBe(error);
+    expect(service.multiply(input, n2)).toBe(error);
+    expect(service.multiply(n2, input)).toBe(error);
+
+    expect(service.divide(input, input)).toBe(error);
+    expect(service.divide(input, n2)).toBe(error);
+    expect(service.divide(n2, input)).toBe(error);
+  });
+
+  it('should not output values > 6 digits', () => {
+    let n1 = 'FFF';
+    let n2 = 'FFF';
+
+    expect(service.multiply(n1, n2)).toMatch(/^[a-zA-Z\d]{1,6}$/);
+  });
 });
