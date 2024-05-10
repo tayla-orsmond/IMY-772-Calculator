@@ -172,4 +172,12 @@ describe('CalculatorService', () => {
     let error = 'error';
     expect(service.divide(n1, 0)).toBe(error);
   });
+
+  it('should not have decimal values in output', () => {
+    let n1 = '678';
+    let n2 = '999';
+
+    expect(service.divide(n1, n2)).toBe('0'); // Remainder = 678
+    expect(service.divide(n2, n1)).toBe('1'); // Remainder = 321
+  });
 });
