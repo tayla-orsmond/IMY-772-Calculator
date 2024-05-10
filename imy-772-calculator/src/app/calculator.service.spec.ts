@@ -218,4 +218,29 @@ describe('CalculatorService', () => {
 
     expect(service.multiply(n1, n2)).toMatch(/^[a-zA-Z\d]{1,6}$/);
   });
+
+  it('should accept lowercase or uppercase letters as input', () => { // output case?
+    let lowercase = 'aaa';
+    let uppercase = 'AAA';
+    
+    expect(service.add(lowercase, lowercase)).toBe('1554');
+    expect(service.add(uppercase, lowercase)).toBe('1554');
+    expect(service.add(lowercase, uppercase)).toBe('1554');
+    expect(service.add(uppercase, uppercase)).toBe('1554');
+
+    expect(service.subtract(lowercase, lowercase)).toBe('0');
+    expect(service.subtract(uppercase, lowercase)).toBe('0');
+    expect(service.subtract(lowercase, uppercase)).toBe('0');
+    expect(service.subtract(uppercase, uppercase)).toBe('0');
+
+    expect(service.multiply(lowercase, lowercase)).toBe('71B8E4');
+    expect(service.multiply(uppercase, lowercase)).toBe('71B8E4');
+    expect(service.multiply(lowercase, uppercase)).toBe('71B8E4');
+    expect(service.multiply(uppercase, uppercase)).toBe('71B8E4');
+
+    expect(service.divide(lowercase, lowercase)).toBe('1');
+    expect(service.divide(uppercase, lowercase)).toBe('1');
+    expect(service.divide(lowercase, uppercase)).toBe('1');
+    expect(service.divide(uppercase, uppercase)).toBe('1');
+  });
 });
