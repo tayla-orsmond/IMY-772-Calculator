@@ -180,4 +180,13 @@ describe('CalculatorService', () => {
     expect(service.divide(n1, n2)).toBe('0'); // Remainder = 678
     expect(service.divide(n2, n1)).toBe('1'); // Remainder = 321
   });
+
+  it('should display absolute value of negative output [disallow negative output]', () => {
+    let n1 = '678';
+    let n2 = '999';
+    let expected = '321';
+
+    expect(parseInt(service.subtract(n1, n2))).toBeGreaterThan(0);
+    expect(service.subtract(n1, n2)).toBe(expected);
+  });
 });
