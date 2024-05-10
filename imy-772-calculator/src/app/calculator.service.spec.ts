@@ -115,4 +115,46 @@ describe('CalculatorService', () => {
 
     expect(service.multiply(n1, n2)).toBe(expected);
   });
+
+  // Division
+  // *** should remainder be displayed as separate value (i.e., R = 275)??
+  it('should divide two 0 hex numbers and return error [division by 0]', () => {
+    let n1 = '000';
+    let n2 = '000';
+    let expected = 'error';
+    
+    expect(service.divide(n1, n2)).toBe(expected);
+  });
+
+  it('should divide AAA by BBB and return 0 [no decimal]', () => {
+    let n1 = 'AAA';
+    let n2 = 'BBB';
+    let expected = '0';
+
+    expect(service.divide(n1, n2)).toBe(expected);
+  });
+
+  it('should divide 56C by 2F3 and return 1 [no decimal]', () => {
+    let n1 = '56C';
+    let n2 = '2F3';
+    let expected = '1';
+
+    expect(service.divide(n1, n2)).toBe(expected); // remainder = 279
+  })
+
+  it('should divide FFF by FFF and return 1', () => {
+    let n1 = 'FFF';
+    let n2 = 'FFF';
+    let expected = '1';
+
+    expect(service.divide(n1, n2)).toBe(expected);
+  });
+  
+  it('should divide A32 by 519 and return 2', () => {
+    let n1 = 'A32';
+    let n2 = '519';
+    let expected = '2';
+
+    expect(service.divide(n1, n2)).toBe(expected);
+  });
 });
