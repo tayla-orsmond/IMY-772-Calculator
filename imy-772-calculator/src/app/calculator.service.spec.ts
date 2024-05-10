@@ -157,4 +157,19 @@ describe('CalculatorService', () => {
 
     expect(service.divide(n1, n2)).toBe(expected);
   });
+
+  // (Error) Handling Input
+  it('should show undefined when /0', () => {
+    let n1 = '675';
+    let zero = '0';
+    let error = 'undefined';
+    expect(service.divide(n1, 0)).toBe(error);
+  });
+
+  it('should show error when 0/0', () => {
+    let n1 = '0';
+    let zero = '0';
+    let error = 'error';
+    expect(service.divide(n1, 0)).toBe(error);
+  });
 });
