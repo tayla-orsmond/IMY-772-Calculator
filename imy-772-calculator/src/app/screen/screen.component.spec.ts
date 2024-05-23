@@ -20,4 +20,15 @@ describe('ScreenComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  // Display
+  it('should have an equation display element', () => {
+    const element = fixture.nativeElement.querySelector('.equation-display');
+    expect(element).toBeTruthy();
+  });
+
+  it('should have a result display element', () => {
+    const element = fixture.nativeElement.querySelector('.result-display');
+    expect(element).toBeTruthy();
+  });
 });
