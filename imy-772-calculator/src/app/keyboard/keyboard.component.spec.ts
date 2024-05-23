@@ -23,8 +23,12 @@ describe('KeyboardComponent', () => {
 
   // Keys tests
   it('should have 10 number keys (0-9)', () => {
-    const numberKeys = fixture.nativeElement.querySelectorAll('.number-key');
+    const numberKeys : HTMLButtonElement [] = fixture.nativeElement.querySelectorAll('.number-key');
     expect(numberKeys.length).toBe(10);
+
+    numberKeys.forEach(numberKey => {
+      expect(numberKey.textContent).toMatch(/[0-9]/);
+    });
   });
 
   it('should have 6 letter keys (A-F)', () => {
@@ -45,5 +49,61 @@ describe('KeyboardComponent', () => {
   it('should have 1 equals key', () => {
     const equalsKey = fixture.nativeElement.querySelector('.equals-key');
     expect(equalsKey).toBeTruthy();
-  });    
+  });
+  
+  // Keypress
+  it('should emit the key pressed after keyPress is called [number 3]', () => {
+    let expectedKey = '3';
+    let selectedKey = '';
+    component.selectedKey.pipe().subscribe(key => {
+      selectedKey = key;
+    });
+
+    component.keyPress(expectedKey);
+    expect(selectedKey).toBe(expectedKey);
+  });
+
+  it('should emit the key pressed after keyPress is called [letter B]', () => {
+    let expectedKey = 'B';
+    let selectedKey = '';
+    component.selectedKey.pipe().subscribe(key => {
+      selectedKey = key;
+    });
+
+    component.keyPress(expectedKey);
+    expect(selectedKey).toBe(expectedKey);
+  });
+
+  it('should emit the key pressed after keyPress is called [operator divide]', () => {
+    let expectedKey = 'divide';
+    let selectedKey = '';
+    component.selectedKey.pipe().subscribe(key => {
+      selectedKey = key;
+    });
+
+    component.keyPress(expectedKey);
+    expect(selectedKey).toBe(expectedKey);
+  });
+
+  it('should emit the key pressed after keyPress is called [clear]', () => {
+    let expectedKey = 'clear';
+    let selectedKey = '';
+    component.selectedKey.pipe().subscribe(key => {
+      selectedKey = key;
+    });
+
+    component.keyPress(expectedKey);
+    expect(selectedKey).toBe(expectedKey);
+  });
+
+  it('should emit the key pressed after keyPress is called [equals]', () => {
+    let expectedKey = 'equals';
+    let selectedKey = '';
+    component.selectedKey.pipe().subscribe(key => {
+      selectedKey = key;
+    });
+
+    component.keyPress(expectedKey);
+    expect(selectedKey).toBe(expectedKey);
+  });
 });
