@@ -34,6 +34,7 @@ describe('KeyboardComponent', () => {
   it('should have 6 letter keys (A-F)', () => {
     const letterKeys = fixture.nativeElement.querySelectorAll('.letter-key');
     expect(letterKeys.length).toBe(6);
+    // Add in test for A-F?
   });
 
   it('should have 4 operator keys', () => {
@@ -44,6 +45,7 @@ describe('KeyboardComponent', () => {
   it('should have 1 clear key', () => {
     const clearKey = fixture.nativeElement.querySelector('.clear-key');
     expect(clearKey).toBeTruthy();
+    // this may turn into a CE key / or AC key or there will be 2
   });
 
   it('should have 1 equals key', () => {
@@ -75,7 +77,7 @@ describe('KeyboardComponent', () => {
   });
 
   it('should emit the key pressed after keyPress is called [operator divide]', () => {
-    let expectedKey = 'divide';
+    let expectedKey = 'divide'; // likely to be a symbol instead of a word
     let selectedKey = '';
     component.selectedKey.pipe().subscribe(key => {
       selectedKey = key;
@@ -86,7 +88,7 @@ describe('KeyboardComponent', () => {
   });
 
   it('should emit the key pressed after keyPress is called [clear]', () => {
-    let expectedKey = 'clear';
+    let expectedKey = 'clear'; // still figuring out how to do AC / CE - might have separate keys or just stick to CE
     let selectedKey = '';
     component.selectedKey.pipe().subscribe(key => {
       selectedKey = key;
@@ -97,7 +99,7 @@ describe('KeyboardComponent', () => {
   });
 
   it('should emit the key pressed after keyPress is called [equals]', () => {
-    let expectedKey = 'equals';
+    let expectedKey = 'equals'; // likely to be a symbol instead of a word
     let selectedKey = '';
     component.selectedKey.pipe().subscribe(key => {
       selectedKey = key;
@@ -106,4 +108,6 @@ describe('KeyboardComponent', () => {
     component.keyPress(expectedKey);
     expect(selectedKey).toBe(expectedKey);
   });
+
+  // should have calculate functionality in the keyboard or just emit the key and let the calculator handle it?
 });
