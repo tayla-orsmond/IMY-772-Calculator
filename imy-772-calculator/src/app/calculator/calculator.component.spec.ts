@@ -69,8 +69,8 @@ describe('CalculatorComponent', () => {
     expect(spy).toHaveBeenCalledWith(key);
   });
 
-  it('should handle key presses [operator plus]', () => {
-    const key = 'plus'; // likely to be a symbol instead
+  it('should handle key presses [operator +]', () => {
+    const key = '+'; // likely to be a symbol instead
     const spy = spyOn(component, 'handleKeyPress');
     component.handleKeyPress(key);
     expect(spy).toHaveBeenCalledWith(key);
@@ -98,7 +98,7 @@ describe('CalculatorComponent', () => {
   });
 
   it('should display [2 + D] when pressing [2 plus D]', () => {
-    const keys = ['2', 'plus', 'D'];
+    const keys = ['2', '+', 'D'];
     keys.forEach(key => {
       component.handleKeyPress(key);
     });
@@ -107,4 +107,44 @@ describe('CalculatorComponent', () => {
     expect(component.result).toBe('');
   });
   
+   // Operation logic
+   it('should call service.add() when evaluating [2 + 3]', () => {
+    const keys = ['2', '+', '3', '='];
+    const spy = spyOn(calculatorServiceStub, 'add');
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(spy).toHaveBeenCalledWith('2', '3');
+  });
+
+  it('should call service.subtract() when evaluating [ABC - 456]', () => {
+    const keys = ['A', 'B', 'C', '-', '4', '5', '6', '='];
+    const spy = spyOn(calculatorServiceStub, 'subtract');
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(spy).toHaveBeenCalledWith('ABC', '456');
+  });
+
+  it('should call service.multiply() when evaluating [98 * FEE]', () => {
+    const keys = ['9', '8', '×', 'F', 'E', 'E', '=']; // we'll see how well these * and / symbols work
+    const spy = spyOn(calculatorServiceStub, 'multiply');
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(spy).toHaveBeenCalledWith('98', 'FEE');
+  });
+
+  it('should call service.divide() when evaluating [123 / C]', () => {
+    const keys = ['1', '2', '3', '÷', 'C', '=']; // we'll see how well these * and / symbols work
+    const spy = spyOn(calculatorServiceStub, 'divide');
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(spy).toHaveBeenCalledWith('123', 'C');
+  });
 });
