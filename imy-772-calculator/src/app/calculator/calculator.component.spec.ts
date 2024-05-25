@@ -147,4 +147,43 @@ describe('CalculatorComponent', () => {
 
     expect(spy).toHaveBeenCalledWith('123', 'C');
   });
+
+  // Result display
+  it('should display the result of [2 + 3]', () => {
+    const keys = ['2', '+', '3', '='];
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(component.result).toBe('5');
+
+    // test it displays in child component in e2e / child tests (test host)
+  });
+
+  it('should display the result of [ABC - 456]', () => {
+    const keys = ['A', 'B', 'C', '-', '4', '5', '6', '='];
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(component.result).toBe('666');
+  });
+
+  it('should display the result of [980 * FEE]', () => {
+    const keys = ['9', '8', '0', '×', 'F', 'E', 'E', '='];
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(component.result).toBe('975500');
+  });
+
+  it('should display the result of [123 / C]', () => {
+    const keys = ['1', '2', '3', '÷', 'C', '='];
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(component.result).toBe('18'); // 18 remainder 3 - display remainder?
+  });
 });
