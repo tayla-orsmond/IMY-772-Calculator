@@ -34,10 +34,10 @@ describe('CalculatorService', () => {
     expect(service.add(n1, n2)).toBe(expected);
   });
 
-  it('should add 56C to 2F3 and return 12F2', () => {
+  it('should add 56C to 2F3 and return 85F', () => {
     let n1 = '56C';
     let n2 = '2F3';
-    let expected = '12F2';
+    let expected = '85F';
 
     expect(service.add(n1, n2)).toBe(expected);
   })
@@ -163,14 +163,14 @@ describe('CalculatorService', () => {
     let n1 = '675';
     let zero = '0';
     let error = 'undefined';
-    expect(service.divide(n1, 0)).toBe(error);
+    expect(service.divide(n1, '0')).toBe(error);
   });
 
   it('should show error when 0/0', () => {
     let n1 = '0';
     let zero = '0';
     let error = 'error';
-    expect(service.divide(n1, 0)).toBe(error);
+    expect(service.divide(n1, '0')).toBe(error);
   });
 
   it('should not have decimal values in output', () => {
