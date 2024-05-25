@@ -54,4 +54,57 @@ describe('CalculatorComponent', () => {
     expect(calculatorService).toBeTruthy();
   });
 
+  // Test handling keypresses
+  it('should handle key presses [number 2]', () => {
+    const key = '2';
+    const spy = spyOn(component, 'handleKeyPress');
+    component.handleKeyPress(key);
+    expect(spy).toHaveBeenCalledWith(key);
+  });
+
+  it('should handle key presses [letter D]', () => {
+    const key = 'D';
+    const spy = spyOn(component, 'handleKeyPress');
+    component.handleKeyPress(key);
+    expect(spy).toHaveBeenCalledWith(key);
+  });
+
+  it('should handle key presses [operator plus]', () => {
+    const key = 'plus'; // likely to be a symbol instead
+    const spy = spyOn(component, 'handleKeyPress');
+    component.handleKeyPress(key);
+    expect(spy).toHaveBeenCalledWith(key);
+  });
+
+
+  // Display
+  it('should display [2] when pressing [2]', () => {
+    const key = '2';
+    component.handleKeyPress(key);
+    expect(component.equation).toBe('2');
+    expect(component.result).toBe('');
+
+    // test it displays in child component in e2e / child tests (test host)
+  });
+
+  it('should display [2 +] when pressing [2 +]', () => {
+    const keys = ['2', '+'];
+    keys.forEach(key => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('2 +');
+    expect(component.result).toBe('');
+  });
+
+  it('should display [2 + D] when pressing [2 plus D]', () => {
+    const keys = ['2', 'plus', 'D'];
+    keys.forEach(key => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('2 + D');
+    expect(component.result).toBe('');
+  });
+  
 });
