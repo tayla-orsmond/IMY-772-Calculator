@@ -186,4 +186,17 @@ describe('CalculatorComponent', () => {
 
     expect(component.result).toBe('18'); // 18 remainder 3 - display remainder?
   });
+
+   // Clear 
+   it('should clear the display when pressing [clear]', () => {
+    const keys = ['2', '+', '3', 'clear'];
+    keys.forEach(key => {
+      component.handleKeyPress(key);      
+    });
+
+    expect(component.equation).toBe('2plus');
+    expect(component.result).toBe('');
+
+    // still figuring this out (if it should be CE / AC or if there should be two buttons)
+  });
 });
