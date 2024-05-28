@@ -193,4 +193,36 @@ describe('CalculatorComponent', () => {
     expect(component.equation).toBe('123 ÷ C');
     expect(component.result).toBe('18'); // 18 remainder 3 - display remainder?
   });
+
+   // Multiple evaluations
+   it('should evaluate multiple equations in a row [F4 + 6 = FA, EE x 45 = 4026, 23 - 47 = 24]', () => {
+    const eq1 = ['F', '4', '+', '6', '='];
+    const eq2 = ['E', 'E', 'x', '4', '5', '='];
+    const eq3 = ['2', '3', '-', '4', '7', '='];
+
+    spyOn(calculatorServiceStub, 'add').and.returnValue('FA');
+    spyOn(calculatorServiceStub, 'multiply').and.returnValue('4026');
+    spyOn(calculatorServiceStub, 'subtract').and.returnValue('24');
+
+    eq1.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('F4 + 6');
+    expect(component.result).toBe('FA');
+
+    eq2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('EE x 45');
+    expect(component.result).toBe('4026');
+
+    eq3.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('23 - 47');
+    expect(component.result).toBe('24'); // absolute value
+  });
 });
