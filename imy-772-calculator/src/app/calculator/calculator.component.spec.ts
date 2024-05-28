@@ -194,8 +194,8 @@ describe('CalculatorComponent', () => {
     expect(component.result).toBe('18'); // 18 remainder 3 - display remainder?
   });
 
-   // Multiple evaluations
-   it('should evaluate multiple equations in a row [F4 + 6 = FA, EE x 45 = 4026, 23 - 47 = 24]', () => {
+  // Multiple evaluations
+  it('should evaluate multiple equations in a row [F4 + 6 = FA, EE x 45 = 4026, 23 - 47 = 24]', () => {
     const eq1 = ['F', '4', '+', '6', '='];
     const eq2 = ['E', 'E', 'x', '4', '5', '='];
     const eq3 = ['2', '3', '-', '4', '7', '='];
@@ -224,5 +224,95 @@ describe('CalculatorComponent', () => {
 
     expect(component.equation).toBe('23 - 47');
     expect(component.result).toBe('24'); // absolute value
+  });
+
+  // Error handling
+  // check if keys disabled in child component in e2e / child tests (test host)
+  it('should not allow inputs > 3 digits', () => {
+    const keys = ['1', '2', '3', '4'];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('123');
+    expect(component.result).toBe('');
+    expect(component.error).toBe('Numbers must be 3 digits or less');
+
+    const keys2 = ['1', '2', '3', '+', 'A', 'B', 'C', 'D'];
+    keys2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('123 + ABC');
+    expect(component.result).toBe('');
+    expect(component.error).toBe('Numbers must be 3 digits or less');
+  });
+
+  it('should not evaluate if the equation is not complete [no second arg]', () => {
+    const keys = ['2', '+', '='];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('2 + ');
+    expect(component.result).toBe('');
+    expect(component.error).toBe(
+      'Equation is not complete, nothing to evaluate'
+    );
+  });
+
+  it('should not evaluate if the equation is not complete [no operator]', () => {
+    const keys = ['2', '4', '='];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('24');
+    expect(component.result).toBe('');
+    expect(component.error).toBe(
+      'Equation is not complete, nothing to evaluate'
+    );
+    // could also just have it evaluate the equation as X = X
+  });
+
+  it('should not add a second operator if the equation already has one', () => {
+    const keys = ['2', '+', 'x'];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('2 + ');
+    expect(component.error).toBe('Equation cannot have two operators');
+
+    const keys2 = ['2', '+', '3', 'x'];
+    keys2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('2 + 3');
+    expect(component.result).toBe('');
+    expect(component.error).toBe('Equation cannot have two operators');
+  });
+
+  it('should not add an operator if the equation is empty', () => {
+    const keys = ['+'];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+    expect(component.error).toBe('Equation cannot start with an operator');
+  });
+
+  it('should not evaluate if the equation is empty', () => {
+    const keys = ['='];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+    expect(component.error).toBe('Nothing to evaluate');
   });
 });
