@@ -19,8 +19,9 @@ export class CalculatorComponent {
   constructor(private calculatorService: CalculatorService) {}
 
   handleKeyPress(key: string) {
+    console.log('eq: ' + this.equation + ' key: ' + key)
     if(!this.checkValidEquation(key)) return;
-    if(this.allClear) { // equation has just been evaluated
+    if(this.equation.includes('Ans') || this.allClear) { // equation has just been evaluated
       this.equation = '';
     }
     switch (key) {
@@ -107,7 +108,7 @@ export class CalculatorComponent {
   }
 
   private clearAll() {
-    this.equation = 'Ans = ' + this.result;
+    this.equation = (this.result ? 'Ans = ' + this.result : '');
     this.result = '';
     this.allClear = false;
   }

@@ -378,87 +378,89 @@ describe('CalculatorComponent', () => {
     expect(component.result).toBe('');
   });
 
-  // // Clear all
-  // it('should clear the equation and set it to "Ans = X" when pressing [AC]', () => {
-  //   const allClear = 'AC';
-  //   expect(component.equation).toBe('');
-  //   expect(component.result).toBe('');
-  //   expect(component.allClear).toBe(true); // initially
+  // Clear all
+  it('should clear the equation and set it to "Ans = X" when pressing [AC]', () => {
+    const allClear = 'AC';
+    spyOn(calculatorServiceStub, 'multiply').and.returnValue('AA6');
 
-  //   component.handleKeyPress(allClear);
-  //   expect(component.equation).toBe('Ans = 0');
-  //   expect(component.result).toBe('');
-  //   expect(component.allClear).toBe(false); // after pressing AC
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+    expect(component.allClear).toBe(true); // initially
 
-  //   const keys = ['2', 'F', 'x', '3', 'A', '='];
-  //   keys.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+    component.handleKeyPress(allClear);
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+    expect(component.allClear).toBe(false); // after pressing AC
 
-  //   expect(component.equation).toBe('2F x 3A');
-  //   expect(component.result).toBe('AA6'); // pressing = evaluates the equation and sets allClear to true
-  //   expect(component.allClear).toBe(true);
+    const keys = ['2', 'F', 'x', '3', 'A', '='];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   component.handleKeyPress(allClear);
+    expect(component.equation).toBe('2F x 3A');
+    expect(component.result).toBe('AA6'); // pressing = evaluates the equation and sets allClear to true
+    expect(component.allClear).toBe(true);
 
-  //   expect(component.equation).toBe('Ans = AA6');
-  //   expect(component.result).toBe('');
-  //   expect(component.allClear).toBe(false); // pressing AC sets allClear to false
-  // });
+    component.handleKeyPress(allClear);
 
-  // // Clear all with multiple evaluations
-  // it('should clear the equation and set it to "Ans = X" when pressing [AC] after multiple evaluations', () => {
-  //   const allClear = 'AC';
-  //   expect(component.equation).toBe('');
-  //   expect(component.result).toBe('');
-  //   expect(component.allClear).toBe(true); // initially
+    expect(component.equation).toBe('Ans = AA6');
+    expect(component.result).toBe('');
+    expect(component.allClear).toBe(false); // pressing AC sets allClear to false
+  });
 
-  //   component.handleKeyPress(allClear);
-  //   expect(component.equation).toBe('Ans = 0');
-  //   expect(component.result).toBe('');
-  //   expect(component.allClear).toBe(false); // after pressing AC
+  // Clear all with multiple evaluations
+  it('should clear the equation and set it to "Ans = X" when pressing [AC] after multiple evaluations', () => {
+    const allClear = 'AC';
+    spyOn(calculatorServiceStub, 'add').and.returnValue('FA');
+    spyOn(calculatorServiceStub, 'multiply').and.returnValue('4026');
+    spyOn(calculatorServiceStub, 'subtract').and.returnValue('24');
 
-  //   const eq1 = ['F', '4', '+', '6', '='];
-  //   const eq2 = ['E', 'E', 'x', '4', '5', '='];
-  //   const eq3 = ['2', '3', '-', '4', '7', '='];
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+    expect(component.allClear).toBe(true); // initially
 
-  //   spyOn(calculatorServiceStub, 'add').and.returnValue('FA');
-  //   spyOn(calculatorServiceStub, 'multiply').and.returnValue('4026');
-  //   spyOn(calculatorServiceStub, 'subtract').and.returnValue('24');
+    component.handleKeyPress(allClear);
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+    expect(component.allClear).toBe(false); // after pressing AC
 
-  //   eq1.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+    const eq1 = ['F', '4', '+', '6', '='];
+    const eq2 = ['E', 'E', 'x', '4', '5', '='];
+    const eq3 = ['2', '3', '-', '4', '7', '='];
 
-  //   expect(component.equation).toBe('F4 + 6');
-  //   expect(component.result).toBe('FA');
-  //   expect(component.allClear).toBe(true); // after pressing = evaluates the equation and sets allClear to true
+    eq1.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   component.handleKeyPress(allClear);
-  //   expect(component.equation).toBe('Ans = FA');
-  //   expect(component.result).toBe('');
-  //   expect(component.allClear).toBe(false); // pressing AC sets allClear to false
+    expect(component.equation).toBe('F4 + 6');
+    expect(component.result).toBe('FA');
+    expect(component.allClear).toBe(true); // after pressing = evaluates the equation and sets allClear to true
 
-  //   eq2.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+    component.handleKeyPress(allClear);
+    expect(component.equation).toBe('Ans = FA');
+    expect(component.result).toBe('');
+    expect(component.allClear).toBe(false); // pressing AC sets allClear to false
 
-  //   expect(component.equation).toBe('EE x 45');
-  //   expect(component.result).toBe('4026'); // pressing = evaluates the equation and sets allClear to true
-  //   expect(component.allClear).toBe(true);
+    eq2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   eq3.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+    expect(component.equation).toBe('EE x 45');
+    expect(component.result).toBe('4026'); // pressing = evaluates the equation and sets allClear to true
+    expect(component.allClear).toBe(true);
 
-  //   expect(component.equation).toBe('23 - 47');
-  //   expect(component.result).toBe('24'); // pressing = evaluates the equation and sets allClear to true
-  //   expect(component.allClear).toBe(true);
+    eq3.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   component.handleKeyPress(allClear);
+    expect(component.equation).toBe('23 - 47');
+    expect(component.result).toBe('24'); // pressing = evaluates the equation and sets allClear to true
+    expect(component.allClear).toBe(true);
 
-  //   expect(component.equation).toBe('Ans = 24');
-  //   expect(component.result).toBe('');
-  //   expect(component.allClear).toBe(false); // pressing AC sets allClear to false
-  // });
+    component.handleKeyPress(allClear);
+
+    expect(component.equation).toBe('Ans = 24');
+    expect(component.result).toBe('');
+    expect(component.allClear).toBe(false); // pressing AC sets allClear to false
+  });
 });
