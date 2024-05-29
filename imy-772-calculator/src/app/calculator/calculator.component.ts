@@ -20,7 +20,7 @@ export class CalculatorComponent {
 
   handleKeyPress(key: string) {
     if(!this.checkValidEquation(key)) return;
-    if(this.allClear) {
+    if(this.allClear) { // equation has just been evaluated
       this.equation = '';
     }
     switch (key) {
@@ -57,7 +57,7 @@ export class CalculatorComponent {
       }
     } else { // key is a number / letter
       // check input is <= 3 digits
-      if(!this.equation.match(operator)){ // 1 operand
+      if(!this.equation.match(operator)){ // 1 operand (no operator yet)
         if(this.equation.length === 3) {
           this.error = 'Operands must be 3 digits or fewer';
           return false;
@@ -98,8 +98,8 @@ export class CalculatorComponent {
       else if(this.equation.length === 1) {
         this.equation = '';
         return;
-      } else if(this.equation.match(operator) !== null) {
-        this.equation = this.equation.slice(0, -3);
+      } else if(this.equation.match(operator)) {
+        this.equation = this.equation.slice(0, -3); // get rid of the spaces and operator
       } else {
         this.equation = this.equation.slice(0, -1);
       }
