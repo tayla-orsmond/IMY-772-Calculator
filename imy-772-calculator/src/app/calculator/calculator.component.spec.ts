@@ -320,44 +320,63 @@ describe('CalculatorComponent', () => {
     expect(component.error).toBe('Equation is not complete, nothing to evaluate');
   });
 
-  // // Clear
-  // it('should clear the last entry (backspace) when pressing [CE]', () => {
-  //   const keys = ['2', 'F', '+', '3', 'A'];
-  //   const clear = 'CE';
-  //   keys.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+  // Clear
+  it('should clear the last entry (backspace) when pressing [CE]', () => {
+    const keys = ['2', 'F', '+', '3', 'A'];
+    const clear = 'CE';
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   expect(component.equation).toBe('2F + 3A');
-  //   expect(component.result).toBe('');
+    expect(component.equation).toBe('2F + 3A');
+    expect(component.result).toBe('');
 
-  //   component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
 
-  //   expect(component.equation).toBe('2F + 3');
-  //   expect(component.result).toBe('');
+    expect(component.equation).toBe('2F + 3');
+    expect(component.result).toBe('');
 
-  //   component.handleKeyPress(clear);
-  //   component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
 
-  //   expect(component.equation).toBe('2F');
-  //   expect(component.result).toBe('');
+    expect(component.equation).toBe('2F');
+    expect(component.result).toBe('');
 
-  //   component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
 
-  //   expect(component.equation).toBe('2');
-  //   expect(component.result).toBe('');
+    expect(component.equation).toBe('2');
+    expect(component.result).toBe('');
 
-  //   component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
 
-  //   expect(component.equation).toBe('');
-  //   expect(component.result).toBe('');
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
 
-  //   component.handleKeyPress(clear); // pressing CE when equation is empty should do nothing
-  //   component.handleKeyPress(clear);
+    component.handleKeyPress(clear); // pressing CE when equation is empty should do nothing
+    component.handleKeyPress(clear);
 
-  //   expect(component.equation).toBe('');
-  //   expect(component.result).toBe('');
-  // });
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+
+    const keys2 = ['A', '2', '÷'];
+    keys2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('A2 ÷ ');
+    expect(component.result).toBe('');
+
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('A2');
+    expect(component.result).toBe('');
+
+    component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+  });
 
   // // Clear all
   // it('should clear the equation and set it to "Ans = X" when pressing [AC]', () => {

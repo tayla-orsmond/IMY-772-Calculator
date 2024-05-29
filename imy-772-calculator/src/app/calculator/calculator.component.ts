@@ -94,12 +94,13 @@ export class CalculatorComponent {
 
   private clearEntry() {
     const operator = /[\+\-x÷]/g;
-    if(this.equation.length === 0) return;
+    if(this.equation.length < 1) return;
       else if(this.equation.length === 1) {
         this.equation = '';
         return;
-      } else if(this.equation.match(operator)) {
-        this.equation = this.equation.slice(0, -3); // get rid of the spaces and operator
+      } else if(this.equation.match(operator) && this.equation.split(' ')[2] === '') {
+        this.equation = this.equation.slice(0, -3);
+        return;
       } else {
         this.equation = this.equation.slice(0, -1);
       }
