@@ -250,73 +250,75 @@ describe('CalculatorComponent', () => {
     expect(component.error).toBe('Operands must be 3 digits or fewer');
   });
 
-  // it('should not evaluate if the equation is not complete [no second arg]', () => {
-  //   const keys = ['2', '+', '='];
-  //   keys.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+  it('should not evaluate if the equation is not complete [no second arg]', () => {
+    const keys = ['2', '+', '='];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   expect(component.equation).toBe('2 + ');
-  //   expect(component.result).toBe('');
-  //   expect(component.error).toBe(
-  //     'Equation is not complete, nothing to evaluate'
-  //   );
-  // });
+    expect(component.equation).toBe('2 + ');
+    expect(component.result).toBe('');
+    expect(component.error).toBe(
+      'Equation is not complete, nothing to evaluate'
+    );
+  });
 
-  // it('should not evaluate if the equation is not complete [no operator]', () => {
-  //   const keys = ['2', '4', '='];
-  //   keys.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+  it('should not evaluate if the equation is not complete [no operator]', () => {
+    const keys = ['2', '4', '='];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   expect(component.equation).toBe('24');
-  //   expect(component.result).toBe('');
-  //   expect(component.error).toBe(
-  //     'Equation is not complete, nothing to evaluate'
-  //   );
-  //   // could also just have it evaluate the equation as X = X
-  // });
+    expect(component.equation).toBe('24');
+    expect(component.result).toBe('');
+    expect(component.error).toBe(
+      'Equation is not complete, nothing to evaluate'
+    );
+    // could also just have it evaluate the equation as X = X
+  });
 
-  // it('should not add a second operator if the equation already has one', () => {
-  //   const keys = ['2', '+', 'x'];
-  //   keys.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+  it('should not add a second operator if the equation already has one', () => {
+    const keys = ['2', '+', 'x'];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   expect(component.equation).toBe('2 + ');
-  //   expect(component.error).toBe('Equation cannot have more than one operator');
+    expect(component.equation).toBe('2 + ');
+    expect(component.error).toBe('Equation cannot have more than one operator');
+  });
 
-  //   const keys2 = ['2', '+', '3', 'x'];
-  //   keys2.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+  it('should not add a second operator if the equation already has one [chaining]', () => {
+    const keys2 = ['2', '+', '3', 'x'];
+    keys2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   expect(component.equation).toBe('2 + 3');
-  //   expect(component.result).toBe('');
-  //   expect(component.error).toBe('Equation cannot have more than one operator');
-  // });
+    expect(component.equation).toBe('2 + 3');
+    expect(component.result).toBe('');
+    expect(component.error).toBe('Equation cannot have more than one operator');
+  });
 
-  // it('should not add an operator if the equation is empty', () => {
-  //   const keys = ['+'];
-  //   keys.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+  it('should not add an operator if the equation is empty', () => {
+    const keys = ['+'];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   expect(component.equation).toBe('');
-  //   expect(component.result).toBe('');
-  //   expect(component.error).toBe('Equation cannot start with an operator');
-  // });
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+    expect(component.error).toBe('Equation cannot start with an operator');
+  });
 
-  // it('should not evaluate if the equation is empty', () => {
-  //   const keys = ['='];
-  //   keys.forEach((key) => {
-  //     component.handleKeyPress(key);
-  //   });
+  it('should not evaluate if the equation is empty', () => {
+    const keys = ['='];
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
 
-  //   expect(component.equation).toBe('');
-  //   expect(component.result).toBe('');
-  //   expect(component.error).toBe('Nothing to evaluate');
-  // });
+    expect(component.equation).toBe('');
+    expect(component.result).toBe('');
+    expect(component.error).toBe('Equation is not complete, nothing to evaluate');
+  });
 
   // // Clear
   // it('should clear the last entry (backspace) when pressing [CE]', () => {
