@@ -1,1 +1,19 @@
-<p>keyboard works!</p>
+<div class="keyboard">
+    <button class="clear-key" (click)="keyPress(allClear ? 'AC' : 'CE')">{{allClear ? 'AC' : 'CE'}}</button>
+  <div class="letter-keys">
+    <button *ngFor="let key of letterKeys" (click)="keyPress(key)">
+      {{ key }}
+    </button>
+  </div>
+  <div class="number-keys">
+    <button *ngFor="let key of numberKeys" (click)="keyPress(key)">
+      {{ key }}
+    </button>
+  </div>
+  <button class="equals-key" (click)="keyPress('=')">=</button>
+  <div class="operator-keys">
+    <button *ngFor="let key of operatorKeys" (click)="keyPress(key)">
+      {{ key }}
+    </button>
+  </div>
+</div>
