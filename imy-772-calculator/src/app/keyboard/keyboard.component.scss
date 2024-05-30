@@ -1,5 +1,13 @@
 button {
   @apply font-mono font-bold sm:text-xl md:text-base text-slate-50 py-2 px-4 rounded-sm;
+
+  &:hover {
+    @apply bg-teal-500 shadow-lg transition-all duration-100;
+  }
+
+  &:focus {
+    @apply outline-none ring-2 ring-teal-500;
+  }
 }
 .number-key,
 .letter-key {
