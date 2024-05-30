@@ -13,10 +13,11 @@ describe('ScreenComponent inside a Test Host', () => {
     standalone: true,
     imports: [ScreenComponent],
     template: `
-      <app-screen [equation]="equation" [result]="result"></app-screen>
+      <app-screen [equation]="equation" [result]="result" [lastEquation]="lastEquation"></app-screen>
     `
   })
   class TestHostComponent {
+    lastEquation = '1 + 1 =';
     equation = '1 + 1';
     result = '2';
   }
@@ -39,6 +40,12 @@ describe('ScreenComponent inside a Test Host', () => {
   });
 
   // Data binding with test host
+  it('should have a last equation of "1 + 1 =" initially', () => {
+    expect(testHost.lastEquation).toBe('1 + 1 =');
+    expect(component.lastEquation).toBe('1 + 1 =');
+    // expect(fixture.nativeElement.querySelector('.last-equation-display').textContent).toContain('1 + 1 ='); // Commented out until phase 3 when UI is implemented
+  });
+  
   it('should have an equation of "1 + 1" initially', () => {
     expect(testHost.equation).toBe('1 + 1');
     expect(component.equation).toBe('1 + 1');
@@ -49,6 +56,13 @@ describe('ScreenComponent inside a Test Host', () => {
     expect(testHost.result).toBe('2');
     expect(component.result).toBe('2');
     // expect(fixture.nativeElement.querySelector('.result-display').textContent).toContain('2'); // Commented out until phase 3 when UI is implemented
+  });
+
+  it('should change last equation to "2 + 2 =" when set to "2 + 2 ="', () => {
+    testHost.lastEquation = '2 + 2 =';
+    fixture.detectChanges();
+    expect(component.lastEquation).toBe('2 + 2 =');
+    // expect(fixture.nativeElement.querySelector('.last-equation-display').textContent).toContain('2 + 2 ='); // Commented out until phase 3 when UI is implemented
   });
 
   it('should change equation to "2 + 2" when set to "2 + 2"', () => {
