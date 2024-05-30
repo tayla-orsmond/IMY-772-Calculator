@@ -15,7 +15,7 @@ describe('CalculatorService', () => {
   });
 
   // Hex Calculator
-  // *** limit operations to two numbers only (i.e., no chaining of operations)??
+  // limit operations to two numbers only (i.e., no chaining of operations) - because input is limited to 3 digits (answers are likely > 3 digits)
 
   // Addition
   it('should add two 0 hex numbers and return 0', () => {
@@ -121,7 +121,7 @@ describe('CalculatorService', () => {
   it('should divide two 0 hex numbers and return error [division by 0]', () => {
     let n1 = '000';
     let n2 = '000';
-    let expected = 'error';
+    let expected = 'ERROR';
     
     expect(service.divide(n1, n2)).toBe(expected);
   });
@@ -131,7 +131,7 @@ describe('CalculatorService', () => {
     let n2 = 'BBB';
     let expected = '0';
 
-    expect(service.divide(n1, n2)).toBe(expected);
+    expect(service.divide(n1, n2)).toBe(expected); // remainder = AAA
   });
 
   it('should divide 56C by 2F3 and return 1 [no decimal]', () => {
@@ -161,16 +161,13 @@ describe('CalculatorService', () => {
   // (Error) Handling Input
   it('should show undefined when /0', () => {
     let n1 = '675';
-    let zero = '0';
-    let error = 'undefined';
+    let error = 'UNDEF';
     expect(service.divide(n1, '0')).toBe(error);
   });
 
   it('should show error when 0/0', () => {
-    let n1 = '0';
-    let zero = '0';
-    let error = 'error';
-    expect(service.divide(n1, '0')).toBe(error);
+    let error = 'ERROR';
+    expect(service.divide('0', '0')).toBe(error);
   });
 
   it('should not have decimal values in output', () => {
@@ -190,33 +187,43 @@ describe('CalculatorService', () => {
     expect(service.subtract(n1, n2)).toBe(expected);
   });
 
-  it('should not allow input of over 3 digits', () => {
-    let input = '1234';
+  it('should not allow input of > 3 digits', () => {
+    let invalid = '1234';
     let n2 = '123';
-    let error = 'error';
+    let error = 'ERROR';
     
-    expect(service.add(input, input)).toBe(error);
-    expect(service.add(input, n2)).toBe(error);
-    expect(service.add(n2, input)).toBe(error);
+    // Should not work for any operation with either input invalid
+    expect(service.add(invalid, invalid)).toBe(error);
+    expect(service.add(invalid, n2)).toBe(error);
+    expect(service.add(n2, invalid)).toBe(error);
 
-    expect(service.subtract(input, input)).toBe(error);
-    expect(service.subtract(input, n2)).toBe(error);
-    expect(service.subtract(n2, input)).toBe(error);
+    expect(service.subtract(invalid, invalid)).toBe(error);
+    expect(service.subtract(invalid, n2)).toBe(error);
+    expect(service.subtract(n2, invalid)).toBe(error);
 
-    expect(service.multiply(input, input)).toBe(error);
-    expect(service.multiply(input, n2)).toBe(error);
-    expect(service.multiply(n2, input)).toBe(error);
+    expect(service.multiply(invalid, invalid)).toBe(error);
+    expect(service.multiply(invalid, n2)).toBe(error);
+    expect(service.multiply(n2, invalid)).toBe(error);
 
-    expect(service.divide(input, input)).toBe(error);
-    expect(service.divide(input, n2)).toBe(error);
-    expect(service.divide(n2, input)).toBe(error);
+    expect(service.divide(invalid, invalid)).toBe(error);
+    expect(service.divide(invalid, n2)).toBe(error);
+    expect(service.divide(n2, invalid)).toBe(error);
   });
 
-  it('should not output values > 6 digits', () => {
-    let n1 = 'FFF';
+  it('should not output values > 6 digits nor in lowercase', () => {
+    let n1 = 'FFF'; // Largest possible valid input
     let n2 = 'FFF';
+    let invalid = 'abcde';
 
-    expect(service.multiply(n1, n2)).toMatch(/^[a-zA-Z\d]{1,6}$/);
+    expect(service.add(n1, n2)).toMatch(/^[A-Z\d]{1,6}$/);
+    expect(service.subtract(n1, n2)).toMatch(/^[A-Z\d]{1,6}$/);
+    expect(service.multiply(n1, n2)).toMatch(/^[A-Z\d]{1,6}$/);
+    expect(service.divide(n1, n2)).toMatch(/^[A-Z\d]{1,6}$/);
+
+    // Error cases
+    expect(service.add(n1, invalid)).toMatch(/^[A-Z\d]{1,6}$/); // error
+    expect(service.divide(n1, '0')).toMatch(/^[A-Z\d]{1,6}$/); // undefined
+    expect(service.divide('0', '0')).toMatch(/^[A-Z\d]{1,6}$/); // error
   });
 
   it('should accept lowercase or uppercase letters as input', () => { // output case?
@@ -242,5 +249,78 @@ describe('CalculatorService', () => {
     expect(service.divide(uppercase, lowercase)).toBe('1');
     expect(service.divide(lowercase, uppercase)).toBe('1');
     expect(service.divide(uppercase, uppercase)).toBe('1');
+  });
+
+  it('should not allow input of non-hex characters, decimals, or blank input', () => {
+    let valid = '123';
+    let invalid = '123g';
+    let invalid2 = '123.4';
+    let error = 'ERROR';
+   
+
+    // Should not work for any operation with either input invalid
+    expect(service.add(invalid, valid)).toBe(error);
+    expect(service.add(valid, invalid)).toBe(error);
+    expect(service.add(invalid2, valid)).toBe(error);
+    expect(service.add(valid, invalid2)).toBe(error);
+    expect(service.add(invalid, invalid)).toBe(error);
+    expect(service.add(invalid2, invalid2)).toBe(error);
+
+    expect(service.subtract(invalid, valid)).toBe(error);
+    expect(service.subtract(valid, invalid)).toBe(error);
+    expect(service.subtract(invalid2, valid)).toBe(error);
+    expect(service.subtract(valid, invalid2)).toBe(error);
+    expect(service.subtract(invalid, invalid)).toBe(error);
+    expect(service.subtract(invalid2, invalid2)).toBe(error);
+
+    expect(service.multiply(invalid, valid)).toBe(error);
+    expect(service.multiply(valid, invalid)).toBe(error);
+    expect(service.multiply(invalid2, valid)).toBe(error);
+    expect(service.multiply(valid, invalid2)).toBe(error);
+    expect(service.multiply(invalid, invalid)).toBe(error);
+    expect(service.multiply(invalid2, invalid2)).toBe(error);
+
+    expect(service.divide(invalid, valid)).toBe(error);
+    expect(service.divide(valid, invalid)).toBe(error);
+    expect(service.divide(invalid2, valid)).toBe(error);
+    expect(service.divide(valid, invalid2)).toBe(error);
+    expect(service.divide(invalid, invalid)).toBe(error);
+    expect(service.divide(invalid2, invalid2)).toBe(error);
+  });
+
+  it('should not allow blank input', () => {
+    let valid = '123';
+    let blank = '';
+    let blankSpace = ' ';
+    let error = 'ERROR';
+
+    // Should not work for any operation with either input invalid
+    expect(service.add(blank, valid)).toBe(error);
+    expect(service.add(valid, blank)).toBe(error);
+    expect(service.add(blankSpace, valid)).toBe(error);
+    expect(service.add(valid, blankSpace)).toBe(error);
+    expect(service.add(blank, blank)).toBe(error);
+    expect(service.add(blankSpace, blankSpace)).toBe(error);
+
+    expect(service.subtract(blank, valid)).toBe(error);
+    expect(service.subtract(valid, blank)).toBe(error);
+    expect(service.subtract(blankSpace, valid)).toBe(error);
+    expect(service.subtract(valid, blankSpace)).toBe(error);
+    expect(service.subtract(blank, blank)).toBe(error);
+    expect(service.subtract(blankSpace, blankSpace)).toBe(error);
+
+    expect(service.multiply(blank, valid)).toBe(error);
+    expect(service.multiply(valid, blank)).toBe(error);
+    expect(service.multiply(blankSpace, valid)).toBe(error);
+    expect(service.multiply(valid, blankSpace)).toBe(error);
+    expect(service.multiply(blank, blank)).toBe(error);
+    expect(service.multiply(blankSpace, blankSpace)).toBe(error);
+    
+    expect(service.divide(blank, valid)).toBe(error);
+    expect(service.divide(valid, blank)).toBe(error);
+    expect(service.divide(blankSpace, valid)).toBe(error);
+    expect(service.divide(valid, blankSpace)).toBe(error);
+    expect(service.divide(blank, blank)).toBe(error);
+    expect(service.divide(blankSpace, blankSpace)).toBe(error);
   });
 });

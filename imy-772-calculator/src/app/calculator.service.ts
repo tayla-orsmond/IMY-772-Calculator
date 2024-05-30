@@ -5,6 +5,9 @@ import { Injectable } from '@angular/core';
 })
 export class CalculatorService {
 
+  private error = "ERROR";
+  private undefined = "UNDEF";
+
   constructor() { }
 
   checkValidHexInput(hex: string): boolean {
@@ -21,7 +24,7 @@ export class CalculatorService {
 
   add(n1: string, n2: string): string {
     if (!this.checkValidHexInput(n1) || !this.checkValidHexInput(n2)) {
-      return "error";
+      return this.error;
     }
     let result = this.convertToDecimal(n1) + this.convertToDecimal(n2);
     return this.convertToHex(result);
@@ -29,7 +32,7 @@ export class CalculatorService {
 
   subtract(n1: string, n2: string): string {
     if (!this.checkValidHexInput(n1) || !this.checkValidHexInput(n2)) {
-      return "error";
+      return this.error;
     }
     let result = this.convertToDecimal(n1) - this.convertToDecimal(n2);
     return this.convertToHex(result);
@@ -37,7 +40,7 @@ export class CalculatorService {
 
   multiply(n1: string, n2: string): string {
     if (!this.checkValidHexInput(n1) || !this.checkValidHexInput(n2)) {
-      return "error";
+      return this.error;
     }
     let result = this.convertToDecimal(n1) * this.convertToDecimal(n2);
     return this.convertToHex(result);
@@ -45,9 +48,9 @@ export class CalculatorService {
 
   divide(n1: string, n2: string): string {
     if (!this.checkValidHexInput(n1) || !this.checkValidHexInput(n2)) {
-      return "error";
+      return this.error;
     } else if (this.convertToDecimal(n2) === 0) {
-      return this.convertToDecimal(n1) === 0 ? "error" : "undefined";
+      return this.convertToDecimal(n1) === 0 ? this.error : this.undefined;
     }
     let result = this.convertToDecimal(n1) / this.convertToDecimal(n2);
     return this.convertToHex(result);
