@@ -70,12 +70,11 @@ describe('CalculatorComponent', () => {
   });
 
   // Default values
-  it('should have an empty equation initially', () => {
+  it('should have an empty values initially [equation, result, error, lastEquation]', () => {
     expect(component.equation).toBe('');
-  });
-
-  it('should have an empty result initially', () => {
     expect(component.result).toBe('');
+    expect(component.error).toBe('');
+    expect(component.lastEquation).toBe('');
   });
 
   // Test handling keypresses
@@ -102,7 +101,6 @@ describe('CalculatorComponent', () => {
     });
 
     expect(component.equation).toBe('2CF + D34');
-    expect(component.result).toBe('');
   });
 
   // Operation logic
@@ -157,7 +155,8 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('2 + 3');
+    expect(component.lastEquation).toBe('2 + 3 =');
+    expect(component.equation).toBe('5');
     expect(component.result).toBe('5');
   });
 
@@ -168,7 +167,8 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('ABC - 456');
+    expect(component.lastEquation).toBe('ABC - 456 =');
+    expect(component.equation).toBe('666');
     expect(component.result).toBe('666');
   });
 
@@ -179,7 +179,8 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('980 x FEE');
+    expect(component.lastEquation).toBe('980 x FEE =');
+    expect(component.equation).toBe('975500');
     expect(component.result).toBe('975500');
   });
 
@@ -190,7 +191,8 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('123 ÷ C');
+    expect(component.lastEquation).toBe('123 ÷ C =');
+    expect(component.equation).toBe('18');
     expect(component.result).toBe('18'); // 18 remainder 3 - display remainder?
   });
 
@@ -208,21 +210,24 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('F4 + 6');
+    expect(component.lastEquation).toBe('F4 + 6 =');
+    expect(component.equation).toBe('FA');
     expect(component.result).toBe('FA');
 
     eq2.forEach((key) => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('EE x 45');
+    expect(component.lastEquation).toBe('EE x 45 =');
+    expect(component.equation).toBe('4026');
     expect(component.result).toBe('4026');
 
     eq3.forEach((key) => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('23 - 47');
+    expect(component.lastEquation).toBe('23 - 47 =');
+    expect(component.equation).toBe('24');
     expect(component.result).toBe('24'); // absolute value
   });
 
@@ -235,7 +240,6 @@ describe('CalculatorComponent', () => {
     });
 
     expect(component.equation).toBe('123');
-    expect(component.result).toBe('');
     expect(component.error).toBe('Operands must be 3 digits or fewer');
   });
 
@@ -246,7 +250,6 @@ describe('CalculatorComponent', () => {
     });
 
     expect(component.equation).toBe('123 + ABC');
-    expect(component.result).toBe('');
     expect(component.error).toBe('Operands must be 3 digits or fewer');
   });
 
@@ -256,6 +259,7 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
+    expect(component.lastEquation).toBe('');
     expect(component.equation).toBe('2 + ');
     expect(component.result).toBe('');
     expect(component.error).toBe(
@@ -269,6 +273,7 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
+    expect(component.lastEquation).toBe('');
     expect(component.equation).toBe('24');
     expect(component.result).toBe('');
     expect(component.error).toBe(
@@ -294,7 +299,6 @@ describe('CalculatorComponent', () => {
     });
 
     expect(component.equation).toBe('2 + 3');
-    expect(component.result).toBe('');
     expect(component.error).toBe('Equation cannot have more than one operator');
   });
 
@@ -305,7 +309,6 @@ describe('CalculatorComponent', () => {
     });
 
     expect(component.equation).toBe('');
-    expect(component.result).toBe('');
     expect(component.error).toBe('Equation cannot start with an operator');
   });
 
@@ -315,6 +318,7 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
+    expect(component.lastEquation).toBe('');
     expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.error).toBe('Equation is not complete, nothing to evaluate');
@@ -329,34 +333,28 @@ describe('CalculatorComponent', () => {
     });
 
     expect(component.equation).toBe('2F + 3A');
-    expect(component.result).toBe('');
 
     component.handleKeyPress(clear);
 
     expect(component.equation).toBe('2F + 3');
-    expect(component.result).toBe('');
 
     component.handleKeyPress(clear);
     component.handleKeyPress(clear);
 
     expect(component.equation).toBe('2F');
-    expect(component.result).toBe('');
 
     component.handleKeyPress(clear);
 
     expect(component.equation).toBe('2');
-    expect(component.result).toBe('');
 
     component.handleKeyPress(clear);
 
     expect(component.equation).toBe('');
-    expect(component.result).toBe('');
 
     component.handleKeyPress(clear); // pressing CE when equation is empty should do nothing
     component.handleKeyPress(clear);
 
     expect(component.equation).toBe('');
-    expect(component.result).toBe('');
 
     const keys2 = ['A', '2', '÷'];
     keys2.forEach((key) => {
@@ -364,18 +362,15 @@ describe('CalculatorComponent', () => {
     });
 
     expect(component.equation).toBe('A2 ÷ ');
-    expect(component.result).toBe('');
 
     component.handleKeyPress(clear);
 
     expect(component.equation).toBe('A2');
-    expect(component.result).toBe('');
 
     component.handleKeyPress(clear);
     component.handleKeyPress(clear);
 
     expect(component.equation).toBe('');
-    expect(component.result).toBe('');
   });
 
   // Clear all
@@ -383,11 +378,13 @@ describe('CalculatorComponent', () => {
     const allClear = 'AC';
     spyOn(calculatorServiceStub, 'multiply').and.returnValue('AA6');
 
+    expect(component.lastEquation).toBe('');
     expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.allClear).toBe(true); // initially
 
     component.handleKeyPress(allClear);
+    expect(component.lastEquation).toBe('');
     expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.allClear).toBe(false); // after pressing AC
@@ -397,13 +394,15 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('2F x 3A');
+    expect(component.lastEquation).toBe('2F x 3A =');
+    expect(component.equation).toBe('AA6');
     expect(component.result).toBe('AA6'); // pressing = evaluates the equation and sets allClear to true
     expect(component.allClear).toBe(true);
 
     component.handleKeyPress(allClear);
 
-    expect(component.equation).toBe('Ans = AA6');
+    expect(component.lastEquation).toBe('Ans = AA6');
+    expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.allClear).toBe(false); // pressing AC sets allClear to false
   });
@@ -415,11 +414,13 @@ describe('CalculatorComponent', () => {
     spyOn(calculatorServiceStub, 'multiply').and.returnValue('4026');
     spyOn(calculatorServiceStub, 'subtract').and.returnValue('24');
 
+    expect(component.lastEquation).toBe('');
     expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.allClear).toBe(true); // initially
 
     component.handleKeyPress(allClear);
+    expect(component.lastEquation).toBe('');
     expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.allClear).toBe(false); // after pressing AC
@@ -432,12 +433,14 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('F4 + 6');
+    expect(component.lastEquation).toBe('F4 + 6 =');
+    expect(component.equation).toBe('FA');
     expect(component.result).toBe('FA');
     expect(component.allClear).toBe(true); // after pressing = evaluates the equation and sets allClear to true
 
     component.handleKeyPress(allClear);
-    expect(component.equation).toBe('Ans = FA');
+    expect(component.lastEquation).toBe('Ans = FA');
+    expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.allClear).toBe(false); // pressing AC sets allClear to false
 
@@ -445,7 +448,8 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('EE x 45');
+    expect(component.lastEquation).toBe('EE x 45 =');
+    expect(component.equation).toBe('4026');
     expect(component.result).toBe('4026'); // pressing = evaluates the equation and sets allClear to true
     expect(component.allClear).toBe(true);
 
@@ -453,13 +457,15 @@ describe('CalculatorComponent', () => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('23 - 47');
+    expect(component.lastEquation).toBe('23 - 47 =');
+    expect(component.equation).toBe('24');
     expect(component.result).toBe('24'); // pressing = evaluates the equation and sets allClear to true
     expect(component.allClear).toBe(true);
 
     component.handleKeyPress(allClear);
 
-    expect(component.equation).toBe('Ans = 24');
+    expect(component.lastEquation).toBe('Ans = 24');
+    expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.allClear).toBe(false); // pressing AC sets allClear to false
   });
