@@ -326,19 +326,68 @@ describe('CalculatorComponent', () => {
 
   // Clear
   it('should clear the last entry (backspace) when pressing [CE]', () => {
-    const keys = ['2', 'F', '+', '3', 'A'];
+    const keys = ['8', 'E', 'E'];
     const clear = 'CE';
     keys.forEach((key) => {
       component.handleKeyPress(key);
     });
 
-    expect(component.equation).toBe('2F + 3A');
+    expect(component.equation).toBe('8EE');
 
     component.handleKeyPress(clear);
 
-    expect(component.equation).toBe('2F + 3');
+    expect(component.equation).toBe('8E');
 
     component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('8');
+
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('');
+
+    const keys2 = ['1', 'B', '+', '7', 'C', '9'];
+    keys2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('1B + 7C9');
+
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('1B + 7C');
+
+    component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('1B + ');
+
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('1B');
+
+    component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('');
+
+    const keys3 = ['2', 'F','C', '+', '3', 'A', '6'];
+    keys3.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.equation).toBe('2FC + 3A6');
+
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('2FC + 3A');
+
+    component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
+
+    expect(component.equation).toBe('2FC');
+
     component.handleKeyPress(clear);
 
     expect(component.equation).toBe('2F');
@@ -348,27 +397,12 @@ describe('CalculatorComponent', () => {
     expect(component.equation).toBe('2');
 
     component.handleKeyPress(clear);
+    component.handleKeyPress(clear);
 
     expect(component.equation).toBe('');
 
     component.handleKeyPress(clear); // pressing CE when equation is empty should do nothing
-    component.handleKeyPress(clear);
-
-    expect(component.equation).toBe('');
-
-    const keys2 = ['A', '2', '÷'];
-    keys2.forEach((key) => {
-      component.handleKeyPress(key);
-    });
-
-    expect(component.equation).toBe('A2 ÷ ');
-
-    component.handleKeyPress(clear);
-
-    expect(component.equation).toBe('A2');
-
-    component.handleKeyPress(clear);
-    component.handleKeyPress(clear);
+    component.handleKeyPress(clear); // pressing CE when equation is empty should do nothing
 
     expect(component.equation).toBe('');
   });
