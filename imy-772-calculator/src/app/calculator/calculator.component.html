@@ -1,1 +1,5 @@
-<p>calculator works!</p>
+<div class="calculator">
+    <app-screen [equation]="equation" [result]="result" [lastEquation]="lastEquation"></app-screen>
+    <p class="error-display">{{error}}</p>
+    <app-keyboard [allClear]="allClear" (selectedKey)="handleKeyPress($event)"></app-keyboard>
+</div>
