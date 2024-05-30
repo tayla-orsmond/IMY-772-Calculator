@@ -503,4 +503,23 @@ describe('CalculatorComponent', () => {
     expect(component.result).toBe('');
     expect(component.allClear).toBe(false); // pressing AC sets allClear to false
   });
+
+  it('should not clear the equation on error', () => {
+    const keys = ['2', '3', 'x', '5', '6', '='];
+    const minus = '-';
+    spyOn(calculatorServiceStub, 'multiply').and.returnValue('BC2');
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.lastEquation).toBe('23 x 56 =');
+    expect(component.equation).toBe('BC2');
+    expect(component.result).toBe('BC2');
+
+    component.handleKeyPress(minus);
+    expect(component.lastEquation).toBe('23 x 56 =');
+    expect(component.equation).toBe('BC2');
+    expect(component.result).toBe('BC2');
+    expect(component.error).toBe('Equation cannot start with an operator');
+  });
 });
