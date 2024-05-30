@@ -1,0 +1,16 @@
+button {
+  @apply font-mono font-bold sm:text-xl md:text-base text-slate-50 py-2 px-4 rounded-sm;
+}
+.number-key,
+.letter-key {
+  @apply bg-teal-400;
+}
+
+.operator-key {
+  @apply bg-teal-600;
+}
+
+.clear-key,
+.equals-key {
+  @apply bg-teal-900;
+}

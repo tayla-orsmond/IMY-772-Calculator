@@ -14,8 +14,8 @@ export class KeyboardComponent {
   // if allClear is false, key displays 'CE' and acts like a backspace key
   
   // Keys 
-  numberKeys = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '0'];
-  letterKeys = ['A', 'B', 'C', 'D', 'E', 'F'];
+  numberKeys = ['7', '8', '9', '4', '5', '6', '1', '2', '3', '0',];
+  letterKeys = ['E', 'F', 'C', 'D', 'A', 'B'];
   operatorKeys = ['+', '-', 'x', '÷']; // decided on x instead of * or × and ÷ instead of /
   
   // Key pressed
