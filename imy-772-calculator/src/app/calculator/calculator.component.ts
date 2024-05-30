@@ -57,7 +57,7 @@ export class CalculatorComponent {
         this.error = 'Equation cannot have more than one operator';
         return false;
       }
-    } else { // key is a number / letter
+    } else if(key !== 'CE' && key !== 'AC') { // key is a number / letter
       // check input is <= 3 digits
       if(!this.equation.match(operator)){ // 1 operand (no operator yet)
         if(this.equation.length === 3) {
