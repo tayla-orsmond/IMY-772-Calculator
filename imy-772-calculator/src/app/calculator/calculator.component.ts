@@ -11,19 +11,20 @@ import { CalculatorService } from '../calculator.service';
   styleUrl: './calculator.component.scss'
 })
 export class CalculatorComponent {
-  equation : string = '';
-  result : string = '';
-  error : string = '';
-  allClear : boolean = true;
+  lastEquation : string = ''; // last equation evaluated (for display)
+  equation : string = ''; // current equation / answer
+  result : string = ''; // result of last equation evaluated
+  error : string = ''; // error message
+  allClear : boolean = true; // true if equation has just been evaluated (= pressed) or if it's the first equation ever
+  // equationEvaluated
 
   constructor(private calculatorService: CalculatorService) {}
 
   handleKeyPress(key: string) {
-    console.log('eq: ' + this.equation + ' key: ' + key)
-    if(!this.checkValidEquation(key)) return;
-    if(this.equation.includes('Ans') || this.allClear) { // equation has just been evaluated
+    if(this.allClear) { // equation has just been evaluated (= pressed)
       this.equation = '';
     }
+    if(!this.checkValidEquation(key)) return;
     switch (key) {
       case '=':
         this.evaluateEquation();
@@ -75,6 +76,7 @@ export class CalculatorComponent {
   }
 
   private evaluateEquation() {
+    this.lastEquation = this.equation + ' =';
     const equArray = this.equation.split(' ');
     switch (equArray[1]) {
       case '+':
@@ -90,7 +92,8 @@ export class CalculatorComponent {
         this.result = this.calculatorService.divide(equArray[0], equArray[2]);
         break;
     }
-    this.allClear = true;
+    this.equation = this.result;
+    this.allClear = true; // equation has just been evaluated
   }
 
   private clearEntry() {
@@ -98,17 +101,16 @@ export class CalculatorComponent {
     if(this.equation.length < 1) return;
       else if(this.equation.length === 1) {
         this.equation = '';
-        return;
       } else if(this.equation.match(operator) && this.equation.split(' ')[2] === '') {
         this.equation = this.equation.slice(0, -3);
-        return;
       } else {
         this.equation = this.equation.slice(0, -1);
       }
   }
 
   private clearAll() {
-    this.equation = (this.result ? 'Ans = ' + this.result : '');
+    this.lastEquation = (this.result ? 'Ans = ' + this.result : '');
+    this.equation = '';
     this.result = '';
     this.allClear = false;
   }
@@ -119,7 +121,7 @@ export class CalculatorComponent {
     } else {
       this.equation += key;
     }
-    this.allClear = false;
+    this.allClear = false; // initially AC is true
   }
 
 }
