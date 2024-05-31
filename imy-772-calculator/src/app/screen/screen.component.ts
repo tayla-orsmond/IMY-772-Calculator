@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { trigger, state, style, transition, animate } from '@angular/animations';
+import { trigger, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-screen',
@@ -26,4 +26,15 @@ export class ScreenComponent {
   @Input() result: string = '';
 
   constructor() { }
+
+  resultColour() {
+    // turn result into a hex colour
+    let result : string = '';
+    if(this.result.length < 6) {
+      result = '0'.repeat(6 - this.result.length) + this.result;
+    } else {
+      result = this.result;
+    }
+    return '#' + result;
+  }
 }

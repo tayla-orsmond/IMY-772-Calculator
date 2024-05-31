@@ -1,4 +1,4 @@
-<div class="screen bg-neutral-200 p-4 rounded flex flex-col justify-end items-end">
+<div class="screen bg-neutral-200 p-4 rounded flex flex-col justify-end items-end" [style]="{border: '2px solid ' + resultColour()}">
     <p class="last-equation-display font-mono text-lg sm:text-base text-slate-500" [@resultAnimation]="result">{{lastEquation ? lastEquation : "Ans = 0"}}</p>
     <p class="equation-display font-mono text-xl sm:text-lg text-slate-900" [@resultAnimation]="result" [@equationAnimation]="equation">{{equation ? equation : "0"}}</p>
     <!-- <p class="result-display">Result: {{result}}</p> -->
