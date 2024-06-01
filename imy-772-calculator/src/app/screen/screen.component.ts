@@ -11,6 +11,7 @@ export class ScreenComponent {
   @Input() lastEquation: string = '';
   @Input() equation: string = '';
   @Input() result: string = '';
+  @Input() error: string = '';
 
   constructor() { }
 }
