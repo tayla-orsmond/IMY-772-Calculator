@@ -51,17 +51,16 @@ describe('CalculatorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Commented out tests until phase 3 when UI is implemented
   // Render children
-  //   it('should have a keyboard', () => {
-  //     const keyboard = fixture.nativeElement.querySelector('app-keyboard');
-  //     expect(keyboard).toBeTruthy();
-  //   });
+    it('should have a keyboard', () => {
+      const keyboard = fixture.nativeElement.querySelector('app-keyboard');
+      expect(keyboard).toBeTruthy();
+    });
 
-  //   it('should have a screen', () => {
-  //     const screen = fixture.nativeElement.querySelector('app-screen');
-  //     expect(screen).toBeTruthy();
-  //   });
+    it('should have a screen', () => {
+      const screen = fixture.nativeElement.querySelector('app-screen');
+      expect(screen).toBeTruthy();
+    });
 
   // Test the calculator service
   it('should have the calculator service', () => {
