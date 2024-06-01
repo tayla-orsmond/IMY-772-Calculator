@@ -1,0 +1,34 @@
+button {
+  @apply font-mono font-bold text-xl md:text-base text-slate-50 py-2 px-4 rounded-sm;
+
+  &:hover {
+    @apply bg-mantis-500 shadow-lg transition-all duration-100;
+  }
+
+  &:focus {
+    @apply outline-none ring-2 ring-mantis-500;
+  }
+}
+.number-key,
+.letter-key {
+  @apply bg-mantis-400;
+}
+
+.operator-key {
+  @apply bg-mantis-600;
+}
+
+.clear-key,
+.equals-key {
+  @apply bg-mantis-900;
+}
+
+.keyboard {
+  grid-template-columns: 3fr 1fr;
+}
+
+@media (min-width: 640px) {
+  .keyboard {
+    grid-template-columns: 2fr 3fr 1fr;
+  }
+}
