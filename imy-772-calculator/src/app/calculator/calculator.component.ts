@@ -21,10 +21,10 @@ export class CalculatorComponent {
   constructor(private calculatorService: CalculatorService) {}
 
   handleKeyPress(key: string) {
+    if(!this.checkValidEquation(key)) return;
     if(this.allClear) { // equation has just been evaluated (= pressed)
       this.equation = '';
     }
-    if(!this.checkValidEquation(key)) return;
     switch (key) {
       case '=':
         this.evaluateEquation();
@@ -50,14 +50,14 @@ export class CalculatorComponent {
         return false;
       }
     } else if(key === '+' || key === 'x' || key === '÷' || key === '-') { // key is an operator
-      if(this.equation.length === 0) {
+      if(this.equation.length === 0 || this.allClear) { // equation is empty or just evaluated (= pressed)
         this.error = 'Equation cannot start with an operator';
         return false;
       } else if(this.equation.match(operator)) {
         this.error = 'Equation cannot have more than one operator';
         return false;
       }
-    } else { // key is a number / letter
+    } else if(key !== 'CE' && key !== 'AC') { // key is a number / letter
       // check input is <= 3 digits
       if(!this.equation.match(operator)){ // 1 operand (no operator yet)
         if(this.equation.length === 3) {
