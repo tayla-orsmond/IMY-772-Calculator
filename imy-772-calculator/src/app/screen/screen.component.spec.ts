@@ -13,13 +13,14 @@ describe('ScreenComponent inside a Test Host', () => {
     standalone: true,
     imports: [ScreenComponent],
     template: `
-      <app-screen [equation]="equation" [result]="result" [lastEquation]="lastEquation"></app-screen>
+      <app-screen [equation]="equation" [result]="result" [lastEquation]="lastEquation" [error]="error"></app-screen>
     `
   })
   class TestHostComponent {
     lastEquation = '1 + 1 =';
     equation = '1 + 1';
     result = '2';
+    error = '';
   }
 
   beforeEach(async () => {
@@ -58,6 +59,11 @@ describe('ScreenComponent inside a Test Host', () => {
     // expect(fixture.nativeElement.querySelector('.result-display').textContent).toContain('2'); // Commented out until phase 3 when UI is implemented
   });
 
+  it('should have an empty error initially', () => {
+    expect(testHost.error).toBe('');
+    expect(component.error).toBe('');
+  });
+
   it('should change last equation to "2 + 2 =" when set to "2 + 2 ="', () => {
     testHost.lastEquation = '2 + 2 =';
     fixture.detectChanges();
@@ -77,6 +83,12 @@ describe('ScreenComponent inside a Test Host', () => {
     fixture.detectChanges();
     expect(component.result).toBe('4');
     // expect(fixture.nativeElement.querySelector('.result-display').textContent).toContain('4'); // Commented out until phase 3 when UI is implemented
+  });
+
+  it('should change error to "Error" when set to "Error"', () => {
+    testHost.error = 'Error';
+    fixture.detectChanges();
+    expect(component.error).toBe('Error');
   });
 
   // Commented out test until phase 3 when UI is implemented
