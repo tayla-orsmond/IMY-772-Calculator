@@ -222,4 +222,92 @@ describe('Calculator e2e', () => {
     cy.get('[data-cy="clear"]').should('contain.text', 'CE');
   });
 
+  // Errors 
+  it('should display an error when 1234 is clicked', () => {
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="2"]').click();
+    cy.get('[data-cy="3"]').click();
+    cy.get('[data-cy="4"]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Operands must be 3 digits or fewer');
+  });
+
+  it('should display an error when 1 + 1234 is clicked', () => {
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="+"]').click();
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="2"]').click();
+    cy.get('[data-cy="3"]').click();
+    cy.get('[data-cy="4"]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Operands must be 3 digits or fewer');
+  });
+
+  it('should display an error when = is clicked and there is nothing to evaluate', () => {
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Equation is not complete, nothing to evaluate');
+
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Equation is not complete, nothing to evaluate');
+
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="+"]').click();
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Equation is not complete, nothing to evaluate');
+  });
+
+  it('should display an error when ÷ is clicked', () => {
+    cy.get('[data-cy="÷"]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Equation cannot start with an operator');
+  });
+
+  it('should display an error when 1 + 2 x is clicked', () => {
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="+"]').click();
+    cy.get('[data-cy="2"]').click();
+    cy.get('[data-cy="x"]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Equation cannot have more than one operator');
+  });
+
+  // Error clear 
+  it('should clear the error when 123[4] x 34 is clicked', () => {
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="2"]').click();
+    cy.get('[data-cy="3"]').click();
+    cy.get('[data-cy="4"]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Operands must be 3 digits or fewer');
+
+    cy.get('[data-cy="x"]').click();
+    cy.get('[data-cy="3"]').click();
+    cy.get('[data-cy="4"]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', '');
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '123 x 34');
+  });
+
+  it('should clear the error when 1 + 2 [x] 34 is clicked', () => {
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="+"]').click();
+    cy.get('[data-cy="2"]').click();
+    cy.get('[data-cy="x"]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Equation cannot have more than one operator');
+
+    cy.get('[data-cy="3"]').click();
+    cy.get('[data-cy="4"]').click();
+
+    cy.get('[data-cy="error"]').invoke('text').should('equal', '');
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '1 + 234');
+  });
+
+  it('should clear the error when [=] [-] FE is clicked [and display multiple errors]', () => {
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Equation is not complete, nothing to evaluate');
+
+    cy.get('[data-cy="-"]').click();
+    cy.get('[data-cy="error"]').invoke('text').should('equal', 'Equation cannot start with an operator');
+
+    cy.get('[data-cy="F"]').click();
+    cy.get('[data-cy="E"]').click();
+
+    cy.get('[data-cy="error"]').invoke('text').should('equal', '');
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', 'FE');
+  });
 })
