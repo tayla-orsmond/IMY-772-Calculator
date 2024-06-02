@@ -9,8 +9,8 @@ The calculator app should be able to perform basic arithmetic functions (additio
 |----------|-------------------------|
 | Arithmetic Operations | Addition <br> Subtraction <br> Multiplication <br> Division |
 | Input and Output | Limit input to 3-digit hexadecimal values <br> Limit output to non-negative, whole, 6-digit, hexadecimal values <br> Display input as hexadecimal value equations <br> Display output as hexadecimal values <br> Allow values and operations to be input by pressing buttons <br> |
-| Error Handling | Display error for /0 <br> Display error for / Disallow input > 3 digits <br> Display absolute value of output (disallow negative output) <br> Overflow values larger than 6 digits (disallow values > 6 digits) <br> Display error for / Disallow decimal places in input |
-| UI | Buttons for letters A-F <br> Buttons for 0-9 <br> Buttons for +,-,/,* <br> Button to backspace / clear value <br> Button to clear equation <br> Button to submit |
+| Error Handling and Limitations | Display error for /0 <br> Display error for / Disallow input > 3 digits <br> Display absolute value of output (disallow negative output) <br> Disallow values > 6 digits <br> Display error for / Disallow decimal places in input <br> Limit calculations to one operator and two operands at a time (disallow chaining) <br> Disallow answers to be used as input in the next equation (since these are likely > 3 digits) <br> Disallow evaluation of empty / incomplete equations |
+| UI | Buttons for letters A-F <br> Buttons for 0-9 <br> Buttons for +,-,/,* <br> Button to backspace / clear value <br> Button to clear equation <br> Button to submit (equals) |
 <!-- | Database | Connect to a database <br> Store all equations and answers in a database <br> Get values from database <br> Post values to database | -->
 
 ## Optional Extras
