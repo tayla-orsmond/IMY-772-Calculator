@@ -113,4 +113,58 @@ describe('Calculator e2e', () => {
     cy.get('[data-cy="equation"]').invoke('text').should('equal', '0');
     cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', '8 ÷ C =');
   });
+
+  // Multiple equations
+  it('should handle multiple equations in a row [EDA - 65 = E75, AB0 x 0 = 0, Clear, EDA x 4 = 3B68, Clear, EDA + 4 = EDE, 56]', () => {
+    cy.get('[data-cy="E"]').click();
+    cy.get('[data-cy="D"]').click();
+    cy.get('[data-cy="A"]').click();
+    cy.get('[data-cy="-"]').click();
+    cy.get('[data-cy="6"]').click();
+    cy.get('[data-cy="5"]').click();
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', 'E75');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'EDA - 65 =');
+
+    cy.get('[data-cy="A"]').click();
+    cy.get('[data-cy="B"]').click();
+    cy.get('[data-cy="0"]').click();
+    cy.get('[data-cy="x"]').click();
+    cy.get('[data-cy="0"]').click();
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '0');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'AB0 x 0 =');
+
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '0');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'Ans = 0');
+
+    cy.get('[data-cy="E"]').click();
+    cy.get('[data-cy="D"]').click();
+    cy.get('[data-cy="A"]').click();
+    cy.get('[data-cy="x"]').click();
+    cy.get('[data-cy="4"]').click();
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '3B68');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'EDA x 4 =');
+
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '0');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'Ans = 3B68');
+
+    cy.get('[data-cy="E"]').click();
+    cy.get('[data-cy="D"]').click();
+    cy.get('[data-cy="A"]').click();
+    cy.get('[data-cy="+"]').click();
+    cy.get('[data-cy="4"]').click();
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', 'EDE');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'EDA + 4 =');
+
+    cy.get('[data-cy="5"]').click();
+    cy.get('[data-cy="6"]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '56');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'EDA + 4 =');
+  });
+
 })
