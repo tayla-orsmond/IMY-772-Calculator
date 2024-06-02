@@ -323,6 +323,28 @@ describe('CalculatorComponent', () => {
     expect(component.error).toBe('Equation is not complete, nothing to evaluate');
   });
 
+  // Overwrite (multiple evaluations)
+  it('should overwrite the equation when pressing a number after an evaluation', () => {
+    const keys = ['A', 'B', 'C', '-', '4', '='];
+    const keys2 = ['1', '2'];
+    spyOn(calculatorServiceStub, 'subtract').and.returnValue('AB8');
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.lastEquation).toBe('ABC - 4 =');
+    expect(component.equation).toBe('AB8'); // 3 digit answer to check bug with overwriting
+    expect(component.result).toBe('AB8');
+
+    keys2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.lastEquation).toBe('ABC - 4 =');
+    expect(component.equation).toBe('12');
+    expect(component.result).toBe('AB8');
+  });
+
   // Clear
   it('should clear the last entry (backspace) when pressing [CE]', () => {
     const keys = ['8', 'E', 'E'];
