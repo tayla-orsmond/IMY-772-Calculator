@@ -1,5 +1,4 @@
 <div class="calculator flex flex-col gap-3 my-2">
-    <p class="error-display h-10 sm:h-5 text-base sm:text-sm text-red-700">{{error}}</p>
-    <app-screen [equation]="equation" [result]="result" [lastEquation]="lastEquation"></app-screen>
+    <app-screen [equation]="equation" [result]="result" [lastEquation]="lastEquation" [error]="error"></app-screen>
     <app-keyboard [allClear]="allClear" (selectedKey)="handleKeyPress($event)"></app-keyboard>
 </div>

@@ -28,12 +28,11 @@ describe('AppComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Commented out tests until phase 3 when UI is implemented
   // Render children
-  // it('should have a calculator', () => {
-  //   const calculator = fixture.nativeElement.querySelector('app-calculator');
-  //   expect(calculator).toBeTruthy();
-  // });
+  it('should have a calculator', () => {
+    const calculator = fixture.nativeElement.querySelector('app-calculator');
+    expect(calculator).toBeTruthy();
+  });
 
   it('should have a title of Hexadecimal Calculator', () => {
     const title = fixture.nativeElement.querySelector('h1');
