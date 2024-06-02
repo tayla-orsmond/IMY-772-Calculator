@@ -51,17 +51,16 @@ describe('CalculatorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Commented out tests until phase 3 when UI is implemented
   // Render children
-  //   it('should have a keyboard', () => {
-  //     const keyboard = fixture.nativeElement.querySelector('app-keyboard');
-  //     expect(keyboard).toBeTruthy();
-  //   });
+    it('should have a keyboard', () => {
+      const keyboard = fixture.nativeElement.querySelector('app-keyboard');
+      expect(keyboard).toBeTruthy();
+    });
 
-  //   it('should have a screen', () => {
-  //     const screen = fixture.nativeElement.querySelector('app-screen');
-  //     expect(screen).toBeTruthy();
-  //   });
+    it('should have a screen', () => {
+      const screen = fixture.nativeElement.querySelector('app-screen');
+      expect(screen).toBeTruthy();
+    });
 
   // Test the calculator service
   it('should have the calculator service', () => {
@@ -322,6 +321,28 @@ describe('CalculatorComponent', () => {
     expect(component.equation).toBe('');
     expect(component.result).toBe('');
     expect(component.error).toBe('Equation is not complete, nothing to evaluate');
+  });
+
+  // Overwrite (multiple evaluations)
+  it('should overwrite the equation when pressing a number after an evaluation', () => {
+    const keys = ['A', 'B', 'C', '-', '4', '='];
+    const keys2 = ['1', '2'];
+    spyOn(calculatorServiceStub, 'subtract').and.returnValue('AB8');
+    keys.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.lastEquation).toBe('ABC - 4 =');
+    expect(component.equation).toBe('AB8'); // 3 digit answer to check bug with overwriting
+    expect(component.result).toBe('AB8');
+
+    keys2.forEach((key) => {
+      component.handleKeyPress(key);
+    });
+
+    expect(component.lastEquation).toBe('ABC - 4 =');
+    expect(component.equation).toBe('12');
+    expect(component.result).toBe('AB8');
   });
 
   // Clear

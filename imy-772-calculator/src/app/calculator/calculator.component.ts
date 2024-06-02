@@ -60,7 +60,7 @@ export class CalculatorComponent {
     } else if(key !== 'CE' && key !== 'AC') { // key is a number / letter
       // check input is <= 3 digits
       if(!this.equation.match(operator)){ // 1 operand (no operator yet)
-        if(this.equation.length === 3) {
+        if(this.equation.length === 3 && !this.allClear) {
           this.error = 'Operands must be 3 digits or fewer';
           return false;
         }
