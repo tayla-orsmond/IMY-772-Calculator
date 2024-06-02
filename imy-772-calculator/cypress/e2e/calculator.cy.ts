@@ -167,4 +167,59 @@ describe('Calculator e2e', () => {
     cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'EDA + 4 =');
   });
 
+  // Clear
+  it('should clear the screen when clear [AC] is clicked [after equation and initially]', () => {
+    cy.get('[data-cy="clear"]').should('contain.text', 'AC');
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '0');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'Ans = 0');
+
+    cy.get('[data-cy="8"]').click();
+    cy.get('[data-cy="2"]').click();
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="-"]').click();
+    cy.get('[data-cy="7"]').click();
+    cy.get('[data-cy="4"]').click();
+    cy.get('[data-cy="B"]').click();
+    cy.get('[data-cy="clear"]').should('contain.text', 'CE');
+
+    cy.get('[data-cy="="]').click();
+    cy.get('[data-cy="clear"]').should('contain.text', 'AC');
+
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="clear"]').should('contain.text', 'CE');
+
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '0');
+    cy.get('[data-cy="lastEquation"]').invoke('text').should('equal', 'Ans = D6');
+  });
+
+  it('should backspace the last character when clear [CE] is clicked', () => {
+    cy.get('[data-cy="8"]').click();
+    cy.get('[data-cy="2"]').click();
+    cy.get('[data-cy="1"]').click();
+    cy.get('[data-cy="-"]').click();
+    cy.get('[data-cy="7"]').click();
+    cy.get('[data-cy="4"]').click();
+    cy.get('[data-cy="B"]').click();
+    cy.get('[data-cy="clear"]').should('contain.text', 'CE');
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="clear"]').should('contain.text', 'CE');
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '821 - 74');
+
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '821 - 7');
+
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '821 - ');
+
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '821');
+
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="clear"]').click();
+    cy.get('[data-cy="equation"]').invoke('text').should('equal', '0');
+    cy.get('[data-cy="clear"]').should('contain.text', 'CE');
+  });
+
 })
