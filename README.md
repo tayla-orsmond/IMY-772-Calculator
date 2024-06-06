@@ -2,6 +2,15 @@
 ## Goal
 The calculator app should be able to perform basic arithmetic functions (addition, subtraction, multiplication and division) on a set of hexadecimal numbers. The restrictions for the calculator is that it will only take inputs of up to 3 digits, return answers up to 6 digits, not return any negative answers, and not return any answers with decimal places.
 
+## Contents 
+- [Goal](#goal)
+- [Functional Requirements](#functional-requirements)
+- [Optional Extras](#optional-extras)
+- [Video](#video)
+- [Development server](#development-server)
+- [Running unit tests](#running-unit-tests)
+- [Running end-to-end tests](#running-end-to-end-tests)
+
 ## Functional Requirements
 | Category | Functional Requirements |
 |----------|-------------------------|
@@ -20,3 +29,17 @@ Please note you need to be part of the University of Pretoria to access.
 
 ## Video
 The link to the demonstration video is here: [demonstration video](https://drive.google.com/file/d/1uIrQMNeRpPQg4IuszPdEgdz3zT_no_QT/view?usp=sharing)
+
+## Development server
+
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.3.7.
+
+Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+
+## Running unit tests
+
+Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+
+## Running end-to-end tests
+
+Run `npm run test:cypress` to execute the end-to-end / UI tests via cypress.
