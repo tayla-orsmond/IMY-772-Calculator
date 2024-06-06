@@ -23,36 +23,35 @@ describe('KeyboardComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // Commented out until phase 3 when UI is implemented
   // Keys tests
-  // it('should have 10 number keys (0-9)', () => {
-  //   const numberKeys : HTMLButtonElement [] = fixture.nativeElement.querySelectorAll('.number-key');
-  //   expect(numberKeys.length).toBe(10);
+  it('should have 10 number keys (0-9)', () => {
+    const numberKeys : HTMLButtonElement [] = fixture.nativeElement.querySelectorAll('.number-key');
+    expect(numberKeys.length).toBe(10);
 
-  //   numberKeys.forEach(numberKey => {
-  //     expect(numberKey.textContent).toMatch(/[0-9]/);
-  //   });
-  // });
+    numberKeys.forEach(numberKey => {
+      expect(numberKey.textContent).toMatch(/[0-9]/);
+    });
+  });
 
-  // it('should have 6 letter keys (A-F)', () => {
-  //   const letterKeys = fixture.nativeElement.querySelectorAll('.letter-key');
-  //   expect(letterKeys.length).toBe(6);
-  // });
+  it('should have 6 letter keys (A-F)', () => {
+    const letterKeys = fixture.nativeElement.querySelectorAll('.letter-key');
+    expect(letterKeys.length).toBe(6);
+  });
 
-  // it('should have 4 operator keys', () => {
-  //   const operatorKeys = fixture.nativeElement.querySelectorAll('.operator-key');
-  //   expect(operatorKeys.length).toBe(4);
-  // });
+  it('should have 4 operator keys', () => {
+    const operatorKeys = fixture.nativeElement.querySelectorAll('.operator-key');
+    expect(operatorKeys.length).toBe(4);
+  });
 
-  // it('should have 1 clear key', () => {
-  //   const clearKey = fixture.nativeElement.querySelector('.clear-key');
-  //   expect(clearKey).toBeTruthy();
-  // });
+  it('should have 1 clear key', () => {
+    const clearKey = fixture.nativeElement.querySelector('.clear-key');
+    expect(clearKey).toBeTruthy();
+  });
 
-  // it('should have 1 equals key', () => {
-  //   const equalsKey = fixture.nativeElement.querySelector('.equals-key');
-  //   expect(equalsKey).toBeTruthy();
-  // });
+  it('should have 1 equals key', () => {
+    const equalsKey = fixture.nativeElement.querySelector('.equals-key');
+    expect(equalsKey).toBeTruthy();
+  });
   
   // Keypress
   it('should emit the key pressed after keyPress is called [number 3]', () => {
@@ -142,14 +141,14 @@ describe('KeyboardComponent inside Test Host', () => {
   it('should have allClear set to true initially', () => {
     expect(testHost.allClear).toBe(true);
     expect(component.allClear).toBe(true);
-    // expect(fixture.nativeElement.querySelector('.clear-key').textContent).toBe('AC'); // Commented out until phase 3 when UI is implemented
+    expect(fixture.nativeElement.querySelector('.clear-key').textContent).toBe('AC');
   });
 
   it('should change allClear to false when set to false', () => {
     testHost.allClear = false;
     fixture.detectChanges();
     expect(component.allClear).toBe(false);
-    // expect(fixture.nativeElement.querySelector('.clear-key').textContent).toBe('CE'); // Commented out until phase 3 when UI is implemented
+    expect(fixture.nativeElement.querySelector('.clear-key').textContent).toBe('CE');
   });
 
   // Keypresses for AC and CE

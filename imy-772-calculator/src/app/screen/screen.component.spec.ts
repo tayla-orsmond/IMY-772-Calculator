@@ -44,19 +44,18 @@ describe('ScreenComponent inside a Test Host', () => {
   it('should have a last equation of "1 + 1 =" initially', () => {
     expect(testHost.lastEquation).toBe('1 + 1 =');
     expect(component.lastEquation).toBe('1 + 1 =');
-    // expect(fixture.nativeElement.querySelector('.last-equation-display').textContent).toContain('1 + 1 ='); // Commented out until phase 3 when UI is implemented
+    expect(fixture.nativeElement.querySelector('.last-equation-display').textContent).toContain('1 + 1 =');
   });
   
   it('should have an equation of "1 + 1" initially', () => {
     expect(testHost.equation).toBe('1 + 1');
     expect(component.equation).toBe('1 + 1');
-    // expect(fixture.nativeElement.querySelector('.equation-display').textContent).toContain('1 + 1'); // Commented out until phase 3 when UI is implemented
+    expect(fixture.nativeElement.querySelector('.equation-display').textContent).toContain('1 + 1');
   });
 
   it('should have a result of "2" initially', () => {
     expect(testHost.result).toBe('2');
     expect(component.result).toBe('2');
-    // expect(fixture.nativeElement.querySelector('.result-display').textContent).toContain('2'); // Commented out until phase 3 when UI is implemented
   });
 
   it('should have an empty error initially', () => {
@@ -68,21 +67,20 @@ describe('ScreenComponent inside a Test Host', () => {
     testHost.lastEquation = '2 + 2 =';
     fixture.detectChanges();
     expect(component.lastEquation).toBe('2 + 2 =');
-    // expect(fixture.nativeElement.querySelector('.last-equation-display').textContent).toContain('2 + 2 ='); // Commented out until phase 3 when UI is implemented
+    expect(fixture.nativeElement.querySelector('.last-equation-display').textContent).toContain('2 + 2 =');
   });
 
   it('should change equation to "2 + 2" when set to "2 + 2"', () => {
     testHost.equation = '2 + 2';
     fixture.detectChanges();
     expect(component.equation).toBe('2 + 2');
-    // expect(fixture.nativeElement.querySelector('.equation-display').textContent).toContain('2 + 2'); // Commented out until phase 3 when UI is implemented
+    expect(fixture.nativeElement.querySelector('.equation-display').textContent).toContain('2 + 2');
   });
 
   it('should change result to "4" when set to "4"', () => {
     testHost.result = '4';
     fixture.detectChanges();
     expect(component.result).toBe('4');
-    // expect(fixture.nativeElement.querySelector('.result-display').textContent).toContain('4'); // Commented out until phase 3 when UI is implemented
   });
 
   it('should change error to "Error" when set to "Error"', () => {
@@ -91,15 +89,19 @@ describe('ScreenComponent inside a Test Host', () => {
     expect(component.error).toBe('Error');
   });
 
-  // Commented out test until phase 3 when UI is implemented
   // Display
-  // it('should have an equation display element', () => {
-  //   const element = fixture.nativeElement.querySelector('.equation-display');
-  //   expect(element).toBeTruthy();
-  // });
+  it('should have an equation display element', () => {
+    const element = fixture.nativeElement.querySelector('.equation-display');
+    expect(element).toBeTruthy();
+  });
 
-  // it('should have a result display element', () => {
-  //   const element = fixture.nativeElement.querySelector('.result-display');
-  //   expect(element).toBeTruthy();
-  // });
+  it('should have a last equation display element', () => {
+    const element = fixture.nativeElement.querySelector('.last-equation-display');
+    expect(element).toBeTruthy();
+  });
+
+  it('should have an error display element', () => {
+    const element = fixture.nativeElement.querySelector('.error-display');
+    expect(element).toBeTruthy();
+  });
 });

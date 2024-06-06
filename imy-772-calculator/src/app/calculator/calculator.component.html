@@ -1,1 +1,4 @@
-<p>calculator works!</p>
+<div class="calculator flex flex-col gap-3 my-2">
+    <app-screen [equation]="equation" [result]="result" [lastEquation]="lastEquation" [error]="error"></app-screen>
+    <app-keyboard [allClear]="allClear" (selectedKey)="handleKeyPress($event)"></app-keyboard>
+</div>
