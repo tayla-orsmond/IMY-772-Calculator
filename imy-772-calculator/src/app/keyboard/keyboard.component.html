@@ -1,0 +1,19 @@
+<div class="keyboard grid gap-2">
+  <button class="clear-key row-start-1 col-start-2 row-span-1 sm:col-start-3" (click)="keyPress(allClear ? 'AC' : 'CE')" [attr.data-cy]="'clear'">{{allClear ? 'AC' : 'CE'}}</button>
+  <div class="letter-keys grid grid-cols-3 grid-rows-2 gap-2 sm:grid-cols-2 sm:grid-rows-4 row-start-1 col-start-1 row-span-2 sm:row-start-2 sm:row-span-1">
+    <button class="letter-key" *ngFor="let key of letterKeys; index as i" (click)="keyPress(key)" [attr.data-cy]="key">
+      {{ key }}
+    </button>
+  </div>
+  <div class="number-keys grid grid-cols-3 grid-rows-4 gap-2 row-start-3 col-start-1 row-span-4 sm:row-start-2 sm:col-start-2 sm:row-span-1">
+    <button class="number-key" *ngFor="let key of numberKeys" (click)="keyPress(key)" [attr.data-cy]="key">
+      {{ key }}
+    </button>
+    <button class="equals-key col-span-2" (click)="keyPress('=')" [attr.data-cy]="'='">=</button>
+  </div>
+  <div class="operator-keys grid grid-cols-1 grid-rows-4 gap-2 row-start-2 col-start-2 row-span-4 sm:row-start-2 sm:col-start-3 sm:row-span-1">
+    <button class="operator-key" *ngFor="let key of operatorKeys" (click)="keyPress(key)" [attr.data-cy]="key">
+      {{ key }}
+    </button>
+  </div>
+</div>
